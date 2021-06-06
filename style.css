@@ -1,0 +1,128 @@
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+  font-family: 'Antic Slab', serif;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #a4a4a4;
+  background-color: rgb(206, 231, 255);
+}
+
+.wrapper {
+  width: 700px;
+  margin: 7vh auto;
+  position: relative;
+}
+
+button,
+input[type='submit'] {
+  height: 30px;
+  border: 1px solid #d7d7ff;
+  background-color: #9dbff1;
+}
+
+button:hover,
+input[type='submit']:hover {
+  cursor: pointer;
+  background-color: #385a8d;
+  color: white;
+}
+
+button:focus,
+input[type='submit']:focus {
+  outline: none;
+}
+
+button > * {
+  pointer-events: none;
+}
+
+h1 {
+  margin: 0;
+  font-size: 38px;
+  color: #1e1e2d;
+}
+
+.add-book {
+  position: relative;
+  display: block;
+  top: -21px;
+  width: 200px;
+  height: 36px;
+  transition: 0.6s;
+}
+
+.new-book-form {
+  top: 14px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  transition: 0.6s;
+}
+
+.new-book-form > input {
+  height: 36px;
+  border: 1px solid #a4a4a4;
+  padding-left: 5px;
+  font-size: 16px;
+}
+
+input[name='pages'] {
+  width: 80px;
+}
+
+.hidden {
+transform: translateY(-400px);
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 1px solid #a4a4a4;
+}
+
+table, th, td {
+  border-collapse: collapse;
+}
+
+table {
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #cecece;
+  padding: 15px;
+}
+
+.td-booking {
+  padding-top: 0;
+  padding-bottom: 0;
+  width: 10vw;
+}
+
+th {
+  background-color: #0098c578;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+th:hover {
+  cursor: pointer;
+  color: white;
+}
+
+tr {
+  background-color: #f5faff;
+}
+
+tr:nth-child(even) {
+  background-color: #f0f5ff;
+}
