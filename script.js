@@ -3,13 +3,6 @@ const addBookButton = document.querySelector('.add-book');
 const newBookForm = document.querySelector('.new-book-form');
 const headers = document.querySelectorAll('th');
 
-libraryItems.addEventListener('click', deleteBook);
-libraryItems.addEventListener('click', toggleRead);
-
-addBookButton.addEventListener('click', displayBookForm);
-newBookForm.addEventListener('submit', addBook);
-headers.forEach((header) => header.addEventListener('click', sortDisplay));
-
 class Book {
   constructor(params) {
     this.title = params.title;
@@ -39,42 +32,46 @@ function displayBooks(sortParam = null) {
     .sort((a, b) => (a[sortParam] < b[sortParam] ? -1 : 1))
     .map(
       (book, i) => `
-      <tr>
-      <td>${book.title}</td>
-      <td>${book.author}</td>
-      <td>${book.pages}</td>
-      <td>
-        <button class='progress' data-index='${i}'>
-          ${
-            book.read
-              ? "<span class='material-icons'>task_alt</span>"
-              : "<span class='material-icons'>remove_circle_outline</span>"
-          }
-        </button>
-      </td>
-      <td><button class='delete' data-index='${i}'>Delete</button></td>
-      </tr>`
+  <tr>
+  <td>${book.title}</td>
+  <td>${book.author}</td>
+  <td>${book.pages}</td>
+  <td>
+  <button class='progress' data-index='${i}'>
+  ${
+  book.read
+    ? "<span class='material-icons'>task_alt</span>"
+    : "<span class='material-icons'>remove_circle_outline</span>"
+}
+  </button>
+  </td>
+  <td><button class='delete' data-index='${i}'>Delete</button></td>
+  </tr>`
     )
     .join('');
 }
 
-function sortDisplay(e) {
-  param = e.target.textContent.toLowerCase().replace('?', '');
+function sortDisplay(param) {
+  param = param.target.textContent.toLowerCase().replace('?', '');
   displayBooks(param);
 }
+
+headers.forEach((header) => header.addEventListener('click', sortDisplay));
 
 function displayBookForm() {
   addBookButton.classList.add('hidden');
   newBookForm.classList.remove('hidden');
 }
 
+addBookButton.addEventListener('click', displayBookForm);
+
 function hideBookForm() {
   newBookForm.classList.add('hidden');
   addBookButton.classList.remove('hidden');
 }
 
-function addBook(e) {
-  e.preventDefault();
+function addBook(book) {
+  book.preventDefault();
   book = new Book({
     title: this.querySelector('[name=title]').value,
     author: this.querySelector('[name=author]').value,
@@ -87,13 +84,17 @@ function addBook(e) {
   this.reset();
 }
 
-function toggleRead(e) {
-  if (!e.target.matches('.progress')) return;
-  index = e.target.dataset.index;
+newBookForm.addEventListener('submit', addBook);
+
+function toggleRead(index) {
+  if (!index.target.matches('.progress')) return;
+  index = index.target.dataset.index;
   library[index].toggleRead();
   localStorage.setItem('library', JSON.stringify(library));
   displayBooks();
 }
+
+libraryItems.addEventListener('click', toggleRead);
 
 function deleteBook(e) {
   if (!e.target.matches('.delete')) return;
@@ -101,6 +102,8 @@ function deleteBook(e) {
   localStorage.setItem('library', JSON.stringify(library));
   displayBooks();
 }
+
+libraryItems.addEventListener('click', deleteBook);
 
 const books = [];
 books[1] = new Book({
